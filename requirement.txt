@@ -1,0 +1,4 @@
+uv sync 
+uv init
+uv add fastapi uvicorn
+uv run python3 app.py
