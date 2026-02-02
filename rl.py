@@ -3,6 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnableLambda
 
 import os
 from dotenv import load_dotenv
@@ -24,6 +25,14 @@ Return as JSON with key:
 - quiz_question
 """)
 
+def clean_and_shout(input_data):
+    # If the input is a dict, we grab the value
+    topic = input_data.get("topic", "")
+    return {"topic": topic.strip().upper()}
+
+# 2. Wrap it in a RunnableLambda
+clean_step = RunnableLambda(clean_and_shout)
+
 print("type the topic what would you like to explained")
 x = input()
 
@@ -41,7 +50,8 @@ parser = JsonOutputParser()
 
 
 chain = (
-    explain_prompt 
+    clean_step
+    | explain_prompt 
     | gemini 
     | parser 
     | RunnablePassthrough.assign(
