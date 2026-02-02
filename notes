@@ -1,0 +1,13 @@
+LCEL is the grammar of the object and langchain is the novel.
+RUnnableWithMessageHistory
+SQLChatMessageHistory
+RedisChatMessageHistory Redis High-speed, real-time apps.
+PostgresChatMessageHistory PostgreSQL Reliable, structured storage with JSONB support.
+MongoDBChatMessageHistory MongoDB Flexible, document-based storage.
+FirestoreChatMessageHistory Google Firestore Serverless apps (Firebase/GCP).
+FileChatMessageHistory Local JSON/Txt Quick local testing without a DB.
+
+A. Trimming (trim_messages)If a user talks to your AI for three days, the history might be 50,000 words. You can't send that to Gemini; it's too expensive and will hit the token limit.The Expert Way: You use trim_messages(). It automatically keeps only the last $X$ tokens or messages, ensuring the AI always has the "recent" context without breaking the bank.
+
+B. Summary Memory (ConversationSummaryMemory)
+Instead of just deleting old messages, you can have a "Background AI" that reads the old chat and writes a 2-sentence summary: "The user is Bibek, he lives in Kathmandu and asked about weather." \* The Expert Way: You pass the Summary + Recent Messages to the AI. This gives it "Long-term" knowledge without the bulk.
